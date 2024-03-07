@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 
-import { deleteProduct, updateProduct } from "../actions"
+import { deleteProduct, updateProduct, createProduct } from "../actions"
 import { productFormSchema } from "./productFormSchema"
 
 type FormType = z.infer<typeof productFormSchema>
@@ -60,6 +60,14 @@ export const ProductForm = ({ product, isFirst }: Props) => {
 
   const onDelete = async () => {
     const response = await deleteProduct(product.id)
+    toast({
+      title: response.message,
+      description: product.label,
+    })
+  }
+
+  const onCreate = async () => {
+    const response = await createProduct(product)
     toast({
       title: response.message,
       description: product.label,
@@ -115,9 +123,9 @@ export const ProductForm = ({ product, isFirst }: Props) => {
                   <Input
                     {...field}
                     value={field.value || undefined}
-                    className={`${
+                    className={`group-hover:border-slate-300 ${
                       get(fieldName, dirtyFields) ? "border-red-300" : ""
-                    } `}
+                    }`}
                   />
                 </FormControl>
                 <FormMessage />
@@ -125,7 +133,7 @@ export const ProductForm = ({ product, isFirst }: Props) => {
             )}
           />
         ))}
-        <div className="absolute flex space-x-4 translate-x-full -right-8">
+        <div className="absolute flex space-x-2 translate-x-full -right-6">
           <Button
             disabled={isSubmitting}
             className={`transition-all ${
@@ -156,9 +164,13 @@ export const ProductForm = ({ product, isFirst }: Props) => {
             size="icon"
             variant="outline"
             type="button"
-            onClick={() => console.log("dodaj")}
+            onClick={onCreate}
           >
-            <CopyPlusIcon />
+            {isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <CopyPlusIcon />
+            )}
           </Button>
           <Button
             className={`transition-all ${
@@ -169,7 +181,12 @@ export const ProductForm = ({ product, isFirst }: Props) => {
             type="button"
             onClick={onDelete}
           >
-            <Trash2Icon />
+            {" "}
+            {isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <Trash2Icon />
+            )}
           </Button>
         </div>
       </form>
