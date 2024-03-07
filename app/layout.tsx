@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
+import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { buttonVariants } from "@/components/ui/button"
 
@@ -49,7 +50,10 @@ export default function RootLayout({
               ))}
             </div>
           </nav>
-          <div className="m-8">{children}</div>
+          <div className="my-8 flex justify-center max-w-screen-xl mx-auto">
+            {children}
+          </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

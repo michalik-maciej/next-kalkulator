@@ -6,14 +6,13 @@ import { Product } from "@prisma/client"
 
 import prisma from "@/lib/prisma"
 
-export const updateProduct = async (data: Product) => {
+export const createProduct = async (data: Product) => {
   try {
-    await prisma.product.update({
-      where: { id: data.id },
-      data,
+    await prisma.product.create({
+      data: { ...data, id: crypto.randomUUID() },
     })
     revalidatePath("/catalog")
-    return { message: "Dane zapisane" }
+    return { message: "Produkt dodany" }
   } catch (error) {
     return { message: getOr("Error", "message", error) }
   }
