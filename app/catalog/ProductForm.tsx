@@ -25,7 +25,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 
-import { createProduct, deleteProduct, updateProduct } from '../actions'
+import { createProduct, deleteProduct, updateProduct } from './actions'
 import { productFormSchema } from './productFormSchema'
 
 type FormType = z.infer<typeof productFormSchema>
@@ -121,7 +121,7 @@ export const ProductForm = ({ product, isFirst }: Props) => {
                   <Input
                     {...field}
                     value={field.value || undefined}
-                    className={`group-hover:border-slate-300 ${
+                    className={`group-hover:border-slate-500 ${
                       get(fieldName, dirtyFields) ? 'border-red-300' : ''
                     }`}
                   />

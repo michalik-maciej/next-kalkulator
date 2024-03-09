@@ -3,8 +3,8 @@ import { filter, sortBy } from 'lodash/fp'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { getProducts } from '../actions'
 import { ProductForm } from './ProductForm'
+import { getProducts } from './actions'
 
 type Dictionary = {
   [key in Product['category']]: string
