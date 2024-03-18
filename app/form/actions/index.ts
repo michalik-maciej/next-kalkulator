@@ -1,1 +1,1 @@
-export * from "./createStand"
+export * from './createStand'

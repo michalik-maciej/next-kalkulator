@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { z } from "zod"
+import { z } from 'zod'
 
 export const shelfSchema = z.object({
   amount: z.coerce.number().int(),
@@ -9,7 +9,7 @@ export const shelfSchema = z.object({
 
 export const standSchema = z.object({
   amount: z.coerce.number().int(),
-  width: z.enum(["66", "80", "100", "125"]),
+  width: z.enum(['66', '80', '100', '125']),
   shelves: z.array(shelfSchema),
 })
 
@@ -17,7 +17,7 @@ export const collectionSchema = z.object({
   amount: z.coerce.number().int(),
   foot: z.coerce.number().int(),
   height: z.coerce.number().int(),
-  variant: z.enum(["P", "G", "I"]),
+  variant: z.enum(['P', 'G', 'I']),
   stands: z.array(standSchema),
 })
 

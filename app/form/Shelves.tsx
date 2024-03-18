@@ -1,20 +1,20 @@
-"use client"
+'use client'
 
-import { Fragment } from "react"
-import { useFormContext, useFieldArray } from "react-hook-form"
-import { Product } from "@prisma/client"
-import { filter } from "lodash/fp"
+import { Product } from '@prisma/client'
+import { filter } from 'lodash/fp'
+import { Fragment } from 'react'
+import { useFieldArray, useFormContext } from 'react-hook-form'
 
-import { FormControl, FormField, FormItem } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Button } from '@/components/ui/button'
+import { FormControl, FormField, FormItem } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
+} from '@/components/ui/select'
 
 interface Props {
   products: Product[]
@@ -23,8 +23,8 @@ interface Props {
 export const Shelves = ({ products }: Props) => {
   const { control, getValues } = useFormContext()
   const options = filter(
-    { category: "shelf", width: Number(getValues().width) },
-    products
+    { category: 'shelf', width: Number(getValues().width) },
+    products,
   )
   const {
     fields: shelves,
@@ -32,7 +32,7 @@ export const Shelves = ({ products }: Props) => {
     remove,
   } = useFieldArray({
     control,
-    name: "shelves",
+    name: 'shelves',
   })
 
   return (

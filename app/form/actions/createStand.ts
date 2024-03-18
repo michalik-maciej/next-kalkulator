@@ -1,9 +1,11 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { getOr } from "lodash/fp"
-import prisma from "@/lib/prisma"
-import { StandType } from "../formSchema"
+import { getOr } from 'lodash/fp'
+import { revalidatePath } from 'next/cache'
+
+import prisma from '@/lib/prisma'
+
+import { StandType } from '../formSchema'
 
 export const createStand = async (data: StandType) => {
   try {
@@ -13,9 +15,9 @@ export const createStand = async (data: StandType) => {
         shelves: { create: data.shelves },
       },
     })
-    revalidatePath("/form")
-    return { message: "Regał dodany" }
+    revalidatePath('/form')
+    return { message: 'Regał dodany' }
   } catch (error) {
-    return { message: getOr("Error", "message", error) }
+    return { message: getOr('Error', 'message', error) }
   }
 }

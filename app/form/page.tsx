@@ -1,5 +1,5 @@
-import { getProducts } from "../catalog/actions"
-import { StandForm } from "./StandForm"
+import { getProducts } from '../catalog/actions'
+import { StandForm } from './StandForm'
 
 export default async function Home() {
   const products = await getProducts()

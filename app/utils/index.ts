@@ -1,1 +1,1 @@
-export * from "./getFormOptions"
+export * from './getFormOptions'
