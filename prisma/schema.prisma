@@ -23,34 +23,65 @@ enum Category {
 }
 
 model Product {
-  id       String   @id @default(uuid())
-  category Category
-  label    String
-  price    Float
-  depth    Int?
-  height   Int?
-  width    Int?
-  Shelf    Shelf[]
-  Stand    Stand[]
+  category   Category
+  depth      Int?
+  height     Int?
+  id         String       @id @default(uuid())
+  label      String
+  price      Float
+  shelf      Shelf[]
+  collection Collection[]
+  width      Int?
 }
 
 model Shelf {
-  id      String  @id @default(cuid())
-  shelfId String
   amount  Int
-  product Product @relation(fields: [shelfId], references: [id])
-  Stand   Stand?  @relation(fields: [standId], references: [id])
+  id      String  @id @default(cuid())
+  product Product @relation(fields: [depth], references: [id])
+  depth   String
+  stand   Stand?  @relation(fields: [standId], references: [id])
   standId String?
+}
 
-  @@index([shelfId], name: "idx_Shelf_Product")
+model Other {
+  id     String @id @default(cuid())
+  amount Int
 }
 
 model Stand {
-  id      String  @id @default(cuid())
-  amount  Int
-  widthId String
-  shelves Shelf[]
-  product Product @relation(fields: [widthId], references: [id])
+  amount       Int
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId String?
+  id           String      @id @default(cuid())
+  shelves      Shelf[]
+  width        Int
+}
 
-  @@index([widthId], name: "idx_Stand_Product")
+enum CollectionVariant {
+  P
+  G
+  I
+}
+
+model Collection {
+  amount        Int
+  baseCover     Boolean
+  calculation   Calculation?      @relation(fields: [calculationId], references: [id])
+  calculationId String?
+  foot          Int
+  height        Int?
+  id            String            @id @default(cuid())
+  stands        Stand[]
+  variant       CollectionVariant
+  Product       Product?          @relation(fields: [productId], references: [id])
+  productId     String?
+}
+
+model Calculation {
+  collections Collection[]
+  createdAt   DateTime
+  discount    Int
+  id          String       @id @default(cuid())
+  title       String
+  updatedAt   DateTime     @updatedAt
 }
