@@ -1,32 +1,32 @@
-"use client"
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import { z } from "zod"
-import { Product } from "@prisma/client"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Product } from '@prisma/client'
+import { get } from 'lodash/fp'
 import {
-  Loader2,
-  SaveIcon,
-  RotateCcwIcon,
   CopyPlusIcon,
+  Loader2,
+  RotateCcwIcon,
+  SaveIcon,
   Trash2Icon,
-} from "lucide-react"
-import { get } from "lodash/fp"
+} from 'lucide-react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Form,
-  FormLabel,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/use-toast'
 
-import { deleteProduct, updateProduct, createProduct } from "../actions"
-import { productFormSchema } from "./productFormSchema"
+import { createProduct, deleteProduct, updateProduct } from '../actions'
+import { productFormSchema } from './productFormSchema'
 
 type FormType = z.infer<typeof productFormSchema>
 
@@ -74,25 +74,24 @@ export const ProductForm = ({ product, isFirst }: Props) => {
     })
   }
 
-  const fieldNames = ["label", "height", "width", "depth", "price"] as const
+  const fieldNames = ['label', 'height', 'width', 'depth', 'price'] as const
   type Dictionary = {
     [key in (typeof fieldNames)[number]]: string
   }
 
   const fieldDictionary: Dictionary = {
-    label: "Opis",
-    height: "Wysokość [cm]",
-    width: "Szerokość [cm]",
-    depth: "Głębokość [cm]",
-    price: "Cena [zł]",
+    label: 'Opis',
+    height: 'Wysokość [cm]',
+    width: 'Szerokość [cm]',
+    depth: 'Głębokość [cm]',
+    price: 'Cena [zł]',
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative group flex gap-8 m-2 items-end"
-      >
+        className="relative group flex gap-8 m-2 items-end">
         <Controller
           control={control}
           name="id"
@@ -114,17 +113,16 @@ export const ProductForm = ({ product, isFirst }: Props) => {
             name={fieldName}
             render={({ field }) => (
               <FormItem
-                className={`${fieldName === "label" ? "w-64" : "w-28"} ${
-                  isFirst ? "space-y-4" : ""
-                }`}
-              >
+                className={`${fieldName === 'label' ? 'w-64' : 'w-28'} ${
+                  isFirst ? 'space-y-4' : ''
+                }`}>
                 {isFirst && <FormLabel>{fieldDictionary[fieldName]}</FormLabel>}
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || undefined}
                     className={`group-hover:border-slate-300 ${
-                      get(fieldName, dirtyFields) ? "border-red-300" : ""
+                      get(fieldName, dirtyFields) ? 'border-red-300' : ''
                     }`}
                   />
                 </FormControl>
@@ -137,35 +135,32 @@ export const ProductForm = ({ product, isFirst }: Props) => {
           <Button
             disabled={isSubmitting}
             className={`transition-all ${
-              isDirty || isSubmitting ? "opacity-100" : "opacity-0"
+              isDirty || isSubmitting ? 'opacity-100' : 'opacity-0'
             } group-hover:opacity-100`}
             size="icon"
             variant="outline"
-            type="submit"
-          >
+            type="submit">
             {isSubmitting ? <Loader2 className="animate-spin" /> : <SaveIcon />}
           </Button>
           <Button
             disabled={isSubmitting}
             className={`transition-all ${
-              isDirty || isSubmitting ? "opacity-100" : "opacity-0"
+              isDirty || isSubmitting ? 'opacity-100' : 'opacity-0'
             } group-hover:opacity-100`}
             variant="outline"
             size="icon"
             type="button"
-            onClick={() => form.reset(product)}
-          >
+            onClick={() => form.reset(product)}>
             <RotateCcwIcon />
           </Button>
           <Button
             className={`transition-all ${
-              isDirty || isSubmitting ? "opacity-100" : "opacity-0"
+              isDirty || isSubmitting ? 'opacity-100' : 'opacity-0'
             } group-hover:opacity-100`}
             size="icon"
             variant="outline"
             type="button"
-            onClick={onCreate}
-          >
+            onClick={onCreate}>
             {isSubmitting ? (
               <Loader2 className="animate-spin" />
             ) : (
@@ -174,14 +169,13 @@ export const ProductForm = ({ product, isFirst }: Props) => {
           </Button>
           <Button
             className={`transition-all ${
-              isDirty || isSubmitting ? "opacity-100" : "opacity-0"
+              isDirty || isSubmitting ? 'opacity-100' : 'opacity-0'
             } group-hover:opacity-100`}
             size="icon"
             variant="outline"
             type="button"
-            onClick={onDelete}
-          >
-            {" "}
+            onClick={onDelete}>
+            {' '}
             {isSubmitting ? (
               <Loader2 className="animate-spin" />
             ) : (

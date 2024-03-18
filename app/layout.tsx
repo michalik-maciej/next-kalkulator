@@ -1,25 +1,25 @@
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
-import { Toaster } from "@/components/ui/toaster"
-import { ThemeProvider } from "@/components/ThemeProvider"
-import { buttonVariants } from "@/components/ui/button"
+import { ThemeProvider } from '@/components/ThemeProvider'
+import { buttonVariants } from '@/components/ui/button'
+import { Toaster } from '@/components/ui/toaster'
 
-import "./globals.css"
-import Link from "next/link"
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://next-calculator-beige.vercel.app/"),
-  title: "Projektownia kalkulator",
-  description: "Kalkulator części metalowych w projektach sklepów",
+  metadataBase: new URL('https://next-calculator-beige.vercel.app/'),
+  title: 'Projektownia kalkulator',
+  description: 'Kalkulator części metalowych w projektach sklepów',
 }
 
 const navLinks = [
-  { path: "/form", label: "Formularz" },
-  { path: "/order", label: "Rozpiska" },
-  { path: "/catalog", label: "Produkty" },
+  { path: '/form', label: 'Formularz' },
+  { path: '/order', label: 'Rozpiska' },
+  { path: '/catalog', label: 'Produkty' },
 ]
 
 export default function RootLayout({
@@ -33,8 +33,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          disableTransitionOnChange
-        >
+          disableTransitionOnChange>
           <nav className="px-24 py-2  bg-slate-900 flex items-center border-2">
             <div>
               {navLinks.map(({ label, path }, index) => (
@@ -42,9 +41,8 @@ export default function RootLayout({
                   key={index}
                   href={path}
                   className={
-                    buttonVariants({ variant: "ghost" }) + " rounded-sm"
-                  }
-                >
+                    buttonVariants({ variant: 'ghost' }) + ' rounded-sm'
+                  }>
                   {label}
                 </Link>
               ))}

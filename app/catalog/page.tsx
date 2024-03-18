@@ -1,41 +1,42 @@
-import { filter, sortBy } from "lodash/fp"
-import { Product } from "@prisma/client"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Product } from '@prisma/client'
+import { filter, sortBy } from 'lodash/fp'
 
-import { getProducts } from "../actions"
-import { ProductForm } from "./ProductForm"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+
+import { getProducts } from '../actions'
+import { ProductForm } from './ProductForm'
 
 type Dictionary = {
-  [key in Product["category"]]: string
+  [key in Product['category']]: string
 }
 
 export default async function Home() {
   const products = await getProducts()
 
-  const categoriesOrder: Product["category"][] = [
-    "leg",
-    "foot",
-    "baseCover",
-    "shelf",
-    "support",
-    "back",
-    "priceStrip",
-    "misc",
+  const categoriesOrder: Product['category'][] = [
+    'leg',
+    'foot',
+    'baseCover',
+    'shelf',
+    'support',
+    'back',
+    'priceStrip',
+    'misc',
   ]
 
   const sortedCategories = sortBy(
     (category) => categoriesOrder.indexOf(category),
-    categoriesOrder
+    categoriesOrder,
   )
   const dictionary: Dictionary = {
-    baseCover: "Osłony dolne",
-    misc: "Inne",
-    foot: "Stopy",
-    leg: "Nogi",
-    support: "Wsporniki",
-    shelf: "Półki",
-    back: "Plecy",
-    priceStrip: "Listwy cenowe",
+    baseCover: 'Osłony dolne',
+    misc: 'Inne',
+    foot: 'Stopy',
+    leg: 'Nogi',
+    support: 'Wsporniki',
+    shelf: 'Półki',
+    back: 'Plecy',
+    priceStrip: 'Listwy cenowe',
   }
 
   return (
@@ -50,7 +51,7 @@ export default async function Home() {
       {sortedCategories.map((category) => (
         <TabsContent key={category} value={category}>
           <ul className="pt-8">
-            {filter(["category", category], products).map((product, index) => (
+            {filter(['category', category], products).map((product, index) => (
               <li key={product.id}>
                 <ProductForm product={product} isFirst={index === 0} />
               </li>

@@ -1,5 +1,6 @@
-import { range } from "lodash/fp"
-import { Skeleton } from "@/components/ui/skeleton"
+import { range } from 'lodash/fp'
+
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Loading() {
   return (
