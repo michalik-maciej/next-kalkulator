@@ -48,9 +48,7 @@ export default function RootLayout({
               ))}
             </div>
           </nav>
-          <div className="my-8 flex justify-center max-w-screen-xl mx-auto">
-            {children}
-          </div>
+          <div className="px-16 m-auto max-w-7xl mb-32">{children}</div>
           <Toaster />
         </ThemeProvider>
       </body>

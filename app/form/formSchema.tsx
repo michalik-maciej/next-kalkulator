@@ -21,6 +21,11 @@ export const collectionSchema = z.object({
   stands: z.array(standSchema),
 })
 
+export const calculationSchema = z.object({
+  title: z.string().max(160),
+})
+
 export type CollectionType = z.infer<typeof collectionSchema>
 export type StandType = z.infer<typeof standSchema>
 export type ShelfType = z.infer<typeof shelfSchema>
+export type CalculationType = z.infer<typeof calculationSchema>

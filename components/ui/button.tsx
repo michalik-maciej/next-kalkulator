@@ -21,14 +21,14 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-10 px-8 py-2',
-        sm: 'h-9 rounded-full px-3',
+        sm: 'h-9 rounded-full px-6',
         lg: 'h-11 rounded-full px-8',
         icon: 'h-10 w-10',
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: 'secondary',
+      size: 'sm',
     },
   },
 )

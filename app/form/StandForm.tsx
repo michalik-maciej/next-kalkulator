@@ -2,9 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Product } from '@prisma/client'
-import { filter } from 'lodash/fp'
 import { SaveIcon } from 'lucide-react'
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
@@ -36,21 +35,7 @@ export const StandForm = ({ products }: Props) => {
     },
   })
 
-  const {
-    fields: shelves,
-    append,
-    remove,
-  } = useFieldArray({
-    control: form.control,
-    name: 'shelves',
-  })
-
-  const shelfOptions = filter(
-    { category: 'shelf', width: Number(form.getValues().width) },
-    products,
-  )
-
-  const { control, reset, handleSubmit, formState } = form
+  const { control, reset, handleSubmit } = form
 
   const onSubmit: SubmitHandler<StandType> = async (data) => {
     const response = await createStand(data)
