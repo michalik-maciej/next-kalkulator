@@ -2,19 +2,12 @@
 
 import { Product } from '@prisma/client'
 import { filter } from 'lodash/fp'
-import { Fragment } from 'react'
+import { Plus } from 'lucide-react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+
+import { AmountSelect } from './fields/AmountSelect'
 
 interface Props {
   products: Product[]
@@ -36,51 +29,21 @@ export const Shelves = ({ products }: Props) => {
   })
 
   return (
-    <>
-      {shelves.map((field, index) => (
-        <Fragment key={field.id}>
-          <FormField
-            control={control}
-            name={`shelves.${index}.depth`}
-            render={({ field }) => (
-              <FormItem>
-                <Select onValueChange={field.onChange}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Głębokość" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {options.map(({ id, label }) => (
-                      <SelectItem key={id} value={id}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
+    <div className="flex rounded-lg gap-2 flex-col border-2 m-8 p-4 w-1/3 items-center">
+      Półki
+      {shelves.map((field, index) => {
+        return (
+          <AmountSelect
             key={field.id}
-            name={`shelves.${index}.amount`}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input {...field} type="number" />
-                </FormControl>
-              </FormItem>
-            )}
+            field={field}
+            options={options}
+            remove={() => remove(index)}
           />
-          <Button variant="secondary" size="sm" onClick={() => remove(index)}>
-            Usuń półki
-          </Button>
-        </Fragment>
-      ))}
-      <Button variant="secondary" size="sm" onClick={append}>
-        Dodaj półki
+        )
+      })}
+      <Button variant="outline" size="icon" onClick={append}>
+        <Plus />
       </Button>
-    </>
+    </div>
   )
 }

@@ -1,5 +1,4 @@
 import { ExternalLink, Plus, Save, Trash2 } from 'lucide-react'
-import { useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -13,43 +12,41 @@ import {
 } from '@/components/ui/dialog'
 
 export const CalculationMenu = () => {
-  const { control, getValues } = useFormContext()
-
-  const dialogContents = [
+  const dialogs = [
     {
       trigger: <Plus />,
       title: <Plus className="size-10 mb-2 mx-auto" />,
-      description: 'Dodanie nowej kalkulacji usunie niezapisane dane',
+      description: 'Dodanie nowej kalkulacji nadpisze niezapisane dane',
       action: <Button onClick={() => {}}>Dodaj</Button>,
     },
     {
       trigger: <ExternalLink />,
       title: <ExternalLink className="size-10 mb-2 mx-auto" />,
-      description: 'Otwórz bieżącą kalkulację',
+      description: 'Otwórz nową kalkulację',
       action: <Button onClick={() => {}}>Otwórz</Button>,
     },
     {
       trigger: <Save />,
       title: <Save className="size-10 mb-2 mx-auto" />,
       description: 'Zapisz bieżącą kalkulację',
-      action: <Button type="submit">Zapisz</Button>,
+      action: <Button>Zapisz</Button>,
     },
     {
       trigger: <Trash2 />,
       title: <Trash2 className="size-10 mb-2 mx-auto" />,
-      description: 'Usuń bieżącą kalkulację',
+      description: 'Trwale usunąć bieżącą kalkulację?',
       action: <Button onClick={() => {}}>Usuń</Button>,
     },
   ]
 
   return (
     <div className="flex gap-4">
-      {dialogContents.map(({ trigger, title, description, action }, index) => (
+      {dialogs.map(({ trigger, title, description, action }, index) => (
         <Dialog key={index}>
           <DialogTrigger>
             <Button size="icon">{trigger}</Button>
           </DialogTrigger>
-          <DialogContent className="top">
+          <DialogContent>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription className="mx-auto">
               {description}
