@@ -7,8 +7,6 @@ import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 
-import { AmountSelect } from './fields/AmountSelect'
-
 interface Props {
   products: Product[]
 }
@@ -32,14 +30,7 @@ export const Shelves = ({ products }: Props) => {
     <div className="flex rounded-lg gap-2 flex-col border-2 m-8 p-4 w-1/3 items-center">
       Półki
       {shelves.map((field, index) => {
-        return (
-          <AmountSelect
-            key={field.id}
-            field={field}
-            options={options}
-            remove={() => remove(index)}
-          />
-        )
+        return <></>
       })}
       <Button variant="outline" size="icon" onClick={append}>
         <Plus />

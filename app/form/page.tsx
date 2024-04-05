@@ -1,14 +1,13 @@
-import { getProducts } from '../catalog/actions'
-import { Calculation } from './Calculation'
-import { StandForm } from './StandForm'
+import { Gondola } from './Gondola'
 
 export default async function Home() {
-  const products = await getProducts()
+  // const products = await getProducts()
 
-  const date = new Date()
-  const initialData = {
-    title: `Kalkulacja ${date.toLocaleString('pl')}`,
-  }
+  // const date = new Date()
+  // const initialData = {
+  //   title: `Kalkulacja ${date.toLocaleString('pl')}`,
+  //   stands: [],
+  // }
 
-  return <Calculation initialData={initialData} />
+  return <Gondola />
 }

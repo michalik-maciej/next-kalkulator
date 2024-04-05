@@ -79,7 +79,6 @@ export const StandForm = ({ products }: Props) => {
             </FormItem>
           )}
         />
-        <Shelves products={products} />
         <Button size="icon" variant="outline" type="submit">
           <SaveIcon />
         </Button>
