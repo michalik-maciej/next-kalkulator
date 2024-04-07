@@ -1,4 +1,4 @@
-import { Gondola } from './Gondola'
+import { Collection } from './Collection'
 
 export default async function Home() {
   // const products = await getProducts()
@@ -9,5 +9,5 @@ export default async function Home() {
   //   stands: [],
   // }
 
-  return <Gondola />
+  return <Collection />
 }

@@ -10,21 +10,20 @@ import {
   UnfoldVertical,
 } from 'lucide-react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
-import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { FormField, FormItem } from '@/components/ui/form'
 
-import { FormSchema } from './Gondola'
+import { CollectionType } from './formSchema'
 
 interface Props {
   standIndex: number
 }
 
-export const Shelves = ({ standIndex }: Props) => {
-  const depthOptions = ['37', '47', '57'] as const
+export const CollectionGroupStandShelves = ({ standIndex }: Props) => {
+  const depthOptions = ['27', '37', '47', '57', '67'] as const
 
-  const form = useFormContext<z.infer<typeof FormSchema>>()
+  const form = useFormContext<CollectionType>()
 
   const shelves = useFieldArray({
     control: form.control,
