@@ -27,19 +27,26 @@ import { CollectionGroupStandShelves } from './CollectionGroupStandShelves'
 import { CollectionType } from './formSchema'
 
 interface Props {
-  index: number
+  groupIndex: number
+  standIndex: number
   stands: UseFieldArrayReturn<FieldValues, 'stands', 'id'>
 }
 
-export const CollectionGroupStand = ({ index, stands }: Props) => {
+export const CollectionGroupStand = ({
+  groupIndex,
+  standIndex,
+  stands,
+}: Props) => {
   const widthOptions = ['66', '80', '100', '125'] as const
   const form = useFormContext<CollectionType>()
 
-  const foot = form.getValues('foot')
-  const width = form.getValues(`stands.${index}.width`)
+  const foot = form.getValues(`groups.${groupIndex}.foot`)
+  const width = form.getValues(
+    `groups.${groupIndex}.stands.${standIndex}.width`,
+  )
   const height = form.getValues('height')
   const shelves = form
-    .getValues(`stands.${index}.shelves`)
+    .getValues(`groups.${groupIndex}.stands.${standIndex}.shelves`)
     .map(({ amount, depth }) => `${amount}x${depth}`)
 
   return (
@@ -60,16 +67,16 @@ export const CollectionGroupStand = ({ index, stands }: Props) => {
           stand
           <Button
             variant="ghost"
-            disabled={index < 1}
+            disabled={standIndex < 1}
             size="icon"
-            onClick={() => stands.swap(index, index - 1)}>
+            onClick={() => stands.swap(standIndex, standIndex - 1)}>
             <MoveLeft />
           </Button>
           <Button
             variant="ghost"
             size="icon"
             onClick={() =>
-              stands.insert(index + 1, {
+              stands.insert(standIndex + 1, {
                 width,
                 shelves: [{ amount: 3, depth: '37' }],
               })
@@ -79,20 +86,20 @@ export const CollectionGroupStand = ({ index, stands }: Props) => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => stands.remove(index)}>
+            onClick={() => stands.remove(standIndex)}>
             <Trash2 />
           </Button>
           <Button
             variant="ghost"
-            disabled={index >= size(stands.fields) - 1}
+            disabled={standIndex >= size(stands.fields) - 1}
             size="icon"
-            onClick={() => stands.swap(index, index + 1)}>
+            onClick={() => stands.swap(standIndex, standIndex + 1)}>
             <MoveRight />
           </Button>
         </div>
         <FormField
           control={form.control}
-          name={`stands.${index}.width`}
+          name={`groups.${groupIndex}.stands.${standIndex}.width`}
           render={({ field }) => {
             const currentWidthIndex = indexOf(field.value, widthOptions)
 
@@ -131,7 +138,10 @@ export const CollectionGroupStand = ({ index, stands }: Props) => {
             )
           }}
         />
-        <CollectionGroupStandShelves standIndex={index} />
+        <CollectionGroupStandShelves
+          groupIndex={groupIndex}
+          standIndex={standIndex}
+        />
       </PopoverContent>
     </Popover>
   )

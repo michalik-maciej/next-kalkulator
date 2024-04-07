@@ -3,10 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { indexOf, size } from 'lodash/fp'
 import { ArrowDownToLine, ArrowUpFromLine } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { toast } from '@/components/ui/use-toast'
 
 import { CollectionGroup } from './CollectionGroup'
@@ -19,9 +20,18 @@ export function Collection() {
     resolver: zodResolver(collectionSchema),
     defaultValues: {
       height: '150',
-      foot: '47',
-      stands: [{ width: '100', shelves: [{ amount: 3, depth: '47' }] }],
+      groups: [
+        {
+          foot: '47',
+          stands: [{ width: '100', shelves: [{ amount: 3, depth: '47' }] }],
+        },
+      ],
+      variant: 'G',
     },
+  })
+  const groups = useFieldArray({
+    control: form.control,
+    name: 'groups',
   })
 
   function onSubmit(data: CollectionType) {
@@ -39,6 +49,33 @@ export function Collection() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="m-8">
+          <FormField
+            control={form.control}
+            name="variant"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-row space-x-2 m-4">
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <RadioGroupItem value="P" />
+                      <FormLabel className="font-normal">P</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <RadioGroupItem value="G" />
+                      <FormLabel className="font-normal">G</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <RadioGroupItem value="I" />
+                      <FormLabel className="font-normal">I</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormItem>
+              )
+            }}
+          />
           <FormField
             control={form.control}
             name="height"
@@ -80,7 +117,9 @@ export function Collection() {
               )
             }}
           />
-          <CollectionGroup />
+          {groups.fields.map((group, index) => (
+            <CollectionGroup key={group.id} groupIndex={index} />
+          ))}
           <Button type="submit">Submit</Button>
         </div>
       </form>

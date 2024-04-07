@@ -10,21 +10,25 @@ import { FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { CollectionGroupStand } from './CollectionGroupStand'
 import { CollectionType } from './formSchema'
 
-export function CollectionGroup() {
+interface Props {
+  groupIndex: number
+}
+
+export function CollectionGroup({ groupIndex }: Props) {
   const footOptions = ['27', '37', '47', '57', '67'] as const
 
   const form = useFormContext<CollectionType>()
 
   const stands = useFieldArray({
     control: form.control,
-    name: 'stands',
+    name: `groups.${groupIndex}.stands`,
   })
 
   return (
     <div>
       <FormField
         control={form.control}
-        name="foot"
+        name={`groups.${groupIndex}.foot`}
         render={({ field }) => {
           const currentFootIndex = indexOf(field.value, footOptions)
 
@@ -59,7 +63,12 @@ export function CollectionGroup() {
       />
       <div className="flex my-16">
         {stands.fields.map((stand, index) => (
-          <CollectionGroupStand key={stand.id} index={index} stands={stands} />
+          <CollectionGroupStand
+            key={stand.id}
+            groupIndex={groupIndex}
+            standIndex={index}
+            stands={stands}
+          />
         ))}
         {!size(stands.fields) && (
           <Button

@@ -17,17 +17,21 @@ import { FormField, FormItem } from '@/components/ui/form'
 import { CollectionType } from './formSchema'
 
 interface Props {
+  groupIndex: number
   standIndex: number
 }
 
-export const CollectionGroupStandShelves = ({ standIndex }: Props) => {
+export const CollectionGroupStandShelves = ({
+  groupIndex,
+  standIndex,
+}: Props) => {
   const depthOptions = ['27', '37', '47', '57', '67'] as const
 
   const form = useFormContext<CollectionType>()
 
   const shelves = useFieldArray({
     control: form.control,
-    name: `stands.${standIndex}.shelves`,
+    name: `groups.${groupIndex}.stands.${standIndex}.shelves`,
   })
 
   return (
@@ -37,7 +41,7 @@ export const CollectionGroupStandShelves = ({ standIndex }: Props) => {
         <div key={field.id}>
           <FormField
             control={form.control}
-            name={`stands.${standIndex}.shelves.${index}.amount`}
+            name={`groups.${groupIndex}.stands.${standIndex}.shelves.${index}.amount`}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -68,7 +72,7 @@ export const CollectionGroupStandShelves = ({ standIndex }: Props) => {
           />
           <FormField
             control={form.control}
-            name={`stands.${standIndex}.shelves.${index}.depth`}
+            name={`groups.${groupIndex}.stands.${standIndex}.shelves.${index}.depth`}
             render={({ field }) => {
               const currentDepthIndex = indexOf(field.value, depthOptions)
 
