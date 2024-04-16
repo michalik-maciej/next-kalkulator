@@ -4,10 +4,12 @@ import { indexOf, size } from 'lodash/fp'
 import {
   BetweenVerticalEnd,
   FoldHorizontal,
+  FoldVertical,
   MoveLeft,
   MoveRight,
   Trash2,
   UnfoldHorizontal,
+  UnfoldVertical,
 } from 'lucide-react'
 import {
   FieldValues,
@@ -37,6 +39,7 @@ export const CollectionGroupStand = ({
   standIndex,
   stands,
 }: Props) => {
+  const footOptions = ['37', '47', '57'] as const
   const widthOptions = ['66', '80', '100', '125'] as const
   const form = useFormContext<CollectionType>()
 
@@ -49,21 +52,65 @@ export const CollectionGroupStand = ({
     .getValues(`groups.${groupIndex}.stands.${standIndex}.shelves`)
     .map(({ amount, depth }) => `${amount}x${depth}`)
 
+  const getContainerDimensions = () => {
+    const scalingFactor = 2
+    return {
+      height: `${scalingFactor * Number(foot)}px`,
+      width: `${scalingFactor * Number(width)}px`,
+    }
+  }
+
   return (
     <Popover>
-      <PopoverTrigger>
-        <div
-          style={{
-            height: `${2 * Number(foot)}px`,
-            width: `${2 * Number(width)}px`,
-          }}
-          className="flex flex-col border-2 transition-width justify-center">
-          <div>{[width, foot, height].join('/')}</div>
-          <div>{shelves.join(' + ')}</div>
-        </div>
+      <PopoverTrigger
+        style={getContainerDimensions()}
+        className="flex flex-col border-2 border-slate-700 transition-width justify-center items-center">
+        <div>{[width, foot, height].join('/')}</div>
+        <div>{shelves.join(' + ')}</div>
       </PopoverTrigger>
       <PopoverContent>
         <div>
+          <FormField
+            control={form.control}
+            name={`groups.${groupIndex}.foot`}
+            render={({ field }) => {
+              const currentFootIndex = indexOf(field.value, footOptions)
+
+              return (
+                <FormItem>
+                  <div className="flex">
+                    stopa
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      disabled={currentFootIndex < 1}
+                      onClick={() => {
+                        form.setValue(
+                          field.name,
+                          footOptions[currentFootIndex - 1],
+                        )
+                        form.trigger(field.name)
+                      }}>
+                      <FoldVertical />
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      disabled={currentFootIndex >= size(footOptions) - 1}
+                      onClick={() => {
+                        form.setValue(
+                          field.name,
+                          footOptions[currentFootIndex + 1],
+                        )
+                        form.trigger(field.name)
+                      }}>
+                      <UnfoldVertical />
+                    </Button>
+                  </div>
+                </FormItem>
+              )
+            }}
+          />
           stand
           <Button
             variant="ghost"

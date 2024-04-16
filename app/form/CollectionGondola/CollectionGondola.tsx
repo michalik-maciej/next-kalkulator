@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Product } from '@prisma/client'
 import { indexOf, size } from 'lodash/fp'
 import { ArrowDownToLine, ArrowUpFromLine } from 'lucide-react'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -10,23 +11,25 @@ import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { toast } from '@/components/ui/use-toast'
 
-import { CollectionGroup } from './CollectionGroup'
-import { CollectionType, collectionSchema } from './formSchema'
+import { CollectionGroup } from '../CollectionGroup'
+import { Order } from '../Order'
+import { CollectionType, collectionSchema } from '../formSchema'
+import styles from './CollectionGondola.module.css'
 
-export function Collection() {
+export function CollectionGondola({ products }: { products: Product[] }) {
   const heightOptions = ['90', '130', '170', '180', '210'] as const
 
   const form = useForm<CollectionType>({
     resolver: zodResolver(collectionSchema),
     defaultValues: {
-      height: '180',
+      height: '130',
       groups: [
         {
           foot: '47',
           stands: [{ width: '100', shelves: [{ amount: 3, depth: '47' }] }],
         },
       ],
-      variant: 'P',
+      variant: 'G',
     },
   })
   const groups = useFieldArray({
@@ -35,6 +38,7 @@ export function Collection() {
   })
 
   function onSubmit(data: CollectionType) {
+    console.log(data)
     toast({
       title: 'You submitted the following values:',
       description: (
@@ -49,33 +53,6 @@ export function Collection() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="m-8">
-          <FormField
-            control={form.control}
-            name="variant"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-row space-x-2 m-4">
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <RadioGroupItem value="P" />
-                      <FormLabel className="font-normal">P</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <RadioGroupItem value="G" />
-                      <FormLabel className="font-normal">G</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <RadioGroupItem value="I" />
-                      <FormLabel className="font-normal">I</FormLabel>
-                    </FormItem>
-                  </RadioGroup>
-                </FormItem>
-              )
-            }}
-          />
           <FormField
             control={form.control}
             name="height"
@@ -117,11 +94,16 @@ export function Collection() {
               )
             }}
           />
-          {groups.fields.map((group, index) => (
-            <CollectionGroup key={group.id} groupIndex={index} />
-          ))}
+          <div className={styles.layout}>
+            {groups.fields.map((group, index) => (
+              <div key={group.id} className={`border-2 border-slate-900`}>
+                <CollectionGroup groupIndex={index} />
+              </div>
+            ))}
+          </div>
           <Button type="submit">Submit</Button>
         </div>
+        <Order products={products} />
       </form>
     </Form>
   )

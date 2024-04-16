@@ -25,7 +25,7 @@ export const CollectionGroupStandShelves = ({
   groupIndex,
   standIndex,
 }: Props) => {
-  const depthOptions = ['27', '37', '47', '57', '67'] as const
+  const depthOptions = ['37', '47', '57'] as const
 
   const form = useFormContext<CollectionType>()
 

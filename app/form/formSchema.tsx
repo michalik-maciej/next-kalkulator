@@ -3,22 +3,24 @@
 import { z } from 'zod'
 
 export const shelfSchema = z.object({
-  amount: z.coerce.number().int(),
-  depth: z.string().uuid(),
+  amount: z.number().int(),
+  depth: z.enum(['37', '47', '57']),
 })
 
 export const standSchema = z.object({
-  amount: z.coerce.number().int(),
   width: z.enum(['66', '80', '100', '125']),
   shelves: z.array(shelfSchema),
 })
 
-export const collectionSchema = z.object({
-  amount: z.coerce.number().int(),
-  foot: z.coerce.number().int(),
-  height: z.coerce.number().int(),
-  variant: z.enum(['P', 'G', 'I']),
+export const groupSchema = z.object({
+  foot: z.enum(['37', '47', '57']),
   stands: z.array(standSchema),
+})
+
+export const collectionSchema = z.object({
+  groups: z.array(groupSchema),
+  height: z.enum(['90', '130', '170', '180', '210']),
+  variant: z.enum(['P', 'G', 'I']),
 })
 
 export const calculationSchema = z.object({
@@ -26,6 +28,7 @@ export const calculationSchema = z.object({
 })
 
 export type CollectionType = z.infer<typeof collectionSchema>
+export type GroupType = z.infer<typeof groupSchema>
 export type StandType = z.infer<typeof standSchema>
 export type ShelfType = z.infer<typeof shelfSchema>
 export type CalculationType = z.infer<typeof calculationSchema>

@@ -1,7 +1,9 @@
+import { getProducts } from '../catalog/actions'
 import { Collection } from './Collection'
+import { CollectionGondola } from './CollectionGondola'
 
 export default async function Home() {
-  // const products = await getProducts()
+  const products = await getProducts()
 
   // const date = new Date()
   // const initialData = {
@@ -9,5 +11,5 @@ export default async function Home() {
   //   stands: [],
   // }
 
-  return <Collection />
+  return <CollectionGondola products={products} />
 }
