@@ -1,10 +1,14 @@
-import { get, groupBy, map, pipe, sumBy } from 'lodash/fp'
+import { Product } from '@prisma/client'
+import { groupBy, map, pick, pickBy, pipe, sumBy } from 'lodash/fp'
 
-export const sumByProductId = (records: { id: string; number: number }[]) =>
+export const sumByProductId = (
+  records: Partial<Product> & { amount: number }[],
+): Partial<Product> & { amount: number }[] =>
   pipe(
     groupBy('id'),
     map((group) => ({
-      id: get('id', group[0]),
-      number: sumBy('number', group),
+      ...pick(['id', 'label', 'price'], group[0]),
+      amount: sumBy('amount', group),
     })),
+    pickBy('amount'),
   )(records)
