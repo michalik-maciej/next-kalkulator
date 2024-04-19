@@ -25,6 +25,7 @@ export const collectionSchema = z.object({
 
 export const calculationSchema = z.object({
   title: z.string().max(160),
+  collections: z.array(collectionSchema),
 })
 
 export type CollectionType = z.infer<typeof collectionSchema>
