@@ -1,7 +1,8 @@
 'use client'
 
-import { size } from 'lodash/fp'
+import { isNumber, size } from 'lodash/fp'
 import { Plus } from 'lucide-react'
+import { useState } from 'react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -15,6 +16,7 @@ interface Props {
 
 export function CollectionGroup({ groupIndex }: Props) {
   const form = useFormContext<CollectionType>()
+  const [standDialogOpen, setStandDialogOpen] = useState<number | null>(null)
 
   const stands = useFieldArray({
     control: form.control,
@@ -22,10 +24,12 @@ export function CollectionGroup({ groupIndex }: Props) {
   })
 
   return (
-    <div className={`flex`}>
+    <div className={`flex ${isNumber(standDialogOpen) && 'bg-slate-800'}`}>
       {stands.fields.map((stand, index) => (
         <CollectionGroupStand
           key={stand.id}
+          standDialogOpen={standDialogOpen}
+          setStandDialogOpen={setStandDialogOpen}
           groupIndex={groupIndex}
           standIndex={index}
           stands={stands}

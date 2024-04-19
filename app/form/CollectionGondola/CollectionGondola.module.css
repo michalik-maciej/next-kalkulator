@@ -1,5 +1,6 @@
 .layout {
-  margin: 64px 0;
+  width: min-content;
+  margin: 64px auto;
   display: grid;
   grid:
     'top0 side0 top1'
@@ -7,22 +8,22 @@
     / min-content min-content min-content;
 }
 
-.layout :nth-child(1) {
+.layout > :nth-child(1) {
   grid-area: side0;
 }
 
-.layout :nth-child(2) {
+.layout > :nth-child(2) {
   grid-area: side1;
 }
 
-.layout :nth-child(3) {
+.layout > :nth-child(3) {
   grid-area: top0;
   margin: auto 0;
   transform: translate(50%, 50%) rotate(90deg);
   transform-origin: top center;
 }
 
-.layout :nth-child(4) {
+.layout > :nth-child(4) {
   grid-area: top1;
   margin: auto 0;
   transform: translate(-50%, -50%) rotate(90deg);

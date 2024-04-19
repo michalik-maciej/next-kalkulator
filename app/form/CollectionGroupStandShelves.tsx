@@ -36,7 +36,7 @@ export const CollectionGroupStandShelves = ({
 
   return (
     <div className="flex rounded-lg gap-2 flex-col border-2 m-8 p-4 items-center">
-      półki
+      Półki
       {shelves.fields.map((field, index) => (
         <div key={field.id}>
           <FormField
