@@ -22,7 +22,7 @@ interface Props {
   standIndex: number
 }
 
-export const CollectionEditGroupStandShelves = ({
+export const EditShelves = ({
   collectionIndex,
   groupIndex,
   standIndex,

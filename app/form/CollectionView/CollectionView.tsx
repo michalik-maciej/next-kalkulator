@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 
-import { CollectionEdit } from '../CollectionEdit'
+import { EditWrapper } from '../EditWrapper'
 import { CalculationType } from '../formSchema'
 import styles from './CollectionView.module.css'
 
@@ -45,17 +45,17 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
                 </div>
               </DrawerTrigger>
               <DrawerContent className="p-8">
-                <CollectionEdit
+                <EditWrapper
                   collectionIndex={collectionIndex}
                   groupIndex={groupIndex}
                   standIndex={standIndex}
                 />
-                <div className="m-8 min-w-full">{children}</div>
               </DrawerContent>
             </Drawer>
           ))}
         </div>
       ))}
+      <div className="my-8 min-w-full">{children}</div>
     </div>
   )
 }

@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Product } from '@prisma/client'
+import { Plus } from 'lucide-react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -37,7 +38,7 @@ export const Calculation = ({ initialData, products }: Props) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col">
-          <div className="flex m-4 space-x-6 items-start justify-between">
+          <div className="flex m-8 space-x-6 items-start justify-between">
             <FormField
               control={form.control}
               name="title"
@@ -61,6 +62,12 @@ export const Calculation = ({ initialData, products }: Props) => {
               />
             </CollectionView>
           ))}
+          <Button
+            className="mx-auto w-40 gap-2"
+            onClick={() => collections.append(initialData.collections[0])}>
+            <Plus />
+            Dodaj ciąg
+          </Button>
         </div>
         <Button type="submit">Submit</Button>
       </form>

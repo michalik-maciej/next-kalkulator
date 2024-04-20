@@ -2,10 +2,10 @@
 
 import { indexOf, size } from 'lodash/fp'
 import {
-  BetweenVerticalEnd,
   FoldHorizontal,
   MoveLeft,
   MoveRight,
+  Plus,
   Trash2,
   UnfoldHorizontal,
 } from 'lucide-react'
@@ -23,7 +23,7 @@ interface Props {
   standIndex: number
 }
 
-export const CollectionEditGroupStand = ({
+export const EditStand = ({
   collectionIndex,
   groupIndex,
   standIndex,
@@ -47,7 +47,7 @@ export const CollectionEditGroupStand = ({
           return (
             <FormItem>
               <div className="flex justify-between items-center">
-                <div>Szerokość {field.value}</div>
+                <div>Szerokość: {field.value}</div>
                 <div className="flex gap-2">
                   <Button
                     size="icon"
@@ -77,53 +77,53 @@ export const CollectionEditGroupStand = ({
                   </Button>
                 </div>
               </div>
+              <div className="flex justify-between items-center">
+                <div>Regał pozycja</div>
+                <div className="flex gap-x-2">
+                  <Button
+                    variant="ghost"
+                    disabled={standIndex < 1}
+                    size="icon"
+                    onClick={() => stands.swap(standIndex, standIndex - 1)}>
+                    <MoveLeft />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    disabled={standIndex >= size(stands.fields) - 1}
+                    size="icon"
+                    onClick={() => stands.swap(standIndex, standIndex + 1)}>
+                    <MoveRight />
+                  </Button>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <div>Regał dodaj/usuń</div>
+                <div className="flex gap-x-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() =>
+                      stands.insert(
+                        standIndex + 1,
+                        form.getValues(
+                          `collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}`,
+                        ),
+                      )
+                    }>
+                    <Plus />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => stands.remove(standIndex)}>
+                    <Trash2 />
+                  </Button>
+                </div>
+              </div>
             </FormItem>
           )
         }}
       />
-      <Separator className="my-2" />
-      <div className="flex justify-between items-center">
-        <div>Regał</div>
-        <div className="flex flex-col">
-          <div className="flex gap-x-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                stands.insert(
-                  standIndex + 1,
-                  form.getValues(
-                    `collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}`,
-                  ),
-                )
-              }>
-              <BetweenVerticalEnd />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => stands.remove(standIndex)}>
-              <Trash2 />
-            </Button>
-          </div>
-          <div className="flex gap-x-2">
-            <Button
-              variant="ghost"
-              disabled={standIndex < 1}
-              size="icon"
-              onClick={() => stands.swap(standIndex, standIndex - 1)}>
-              <MoveLeft />
-            </Button>
-            <Button
-              variant="ghost"
-              disabled={standIndex >= size(stands.fields) - 1}
-              size="icon"
-              onClick={() => stands.swap(standIndex, standIndex + 1)}>
-              <MoveRight />
-            </Button>
-          </div>
-        </div>
-      </div>
     </>
   )
 }

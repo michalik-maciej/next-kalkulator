@@ -5,30 +5,49 @@ import { ArrowDownToLine, ArrowUpFromLine } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import { FormField, FormItem } from '@/components/ui/form'
-import { Separator } from '@/components/ui/separator'
+import { FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
-import { CollectionEditGroup } from '../CollectionEditGroup'
-import { CollectionEditGroupStand } from '../CollectionEditGroupStand'
-import { CollectionEditGroupStandShelves } from '../CollectionEditGroupStandShelves'
 import { CalculationType } from '../formSchema'
 
 interface Props {
   collectionIndex: number
-  groupIndex: number
-  standIndex: number
 }
 
-export const CollectionEdit = ({
-  collectionIndex,
-  groupIndex,
-  standIndex,
-}: Props) => {
+export const EditCollection = ({ collectionIndex }: Props) => {
   const form = useFormContext<CalculationType>()
   const heightOptions = ['90', '130', '170', '180', '210'] as const
 
   return (
     <>
+      <FormField
+        control={form.control}
+        name={`collections.${collectionIndex}.variant`}
+        render={({ field }) => {
+          return (
+            <FormItem className="flex items-center justify-between h-[35px]">
+              <div>Rodzaj ciągu</div>
+              <RadioGroup
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                className="flex space-x-4">
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <RadioGroupItem value="P" />
+                  <FormLabel className="font-normal">P</FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <RadioGroupItem value="G" />
+                  <FormLabel className="font-normal">G</FormLabel>
+                </FormItem>
+                <FormItem className="flex items-center space-x-3 space-y-0">
+                  <RadioGroupItem disabled value="I" />
+                  <FormLabel className="font-normal">I</FormLabel>
+                </FormItem>
+              </RadioGroup>
+            </FormItem>
+          )
+        }}
+      />
       <FormField
         control={form.control}
         name={`collections.${collectionIndex}.height`}
@@ -38,7 +57,7 @@ export const CollectionEdit = ({
           return (
             <FormItem>
               <div className="flex justify-between items-center">
-                <div>Wysokość {field.value}</div>
+                <div>Wysokość: {field.value}</div>
                 <div className="flex gap-2">
                   <Button
                     size="icon"
@@ -71,26 +90,6 @@ export const CollectionEdit = ({
             </FormItem>
           )
         }}
-      />
-      <Separator className="my-2" />
-
-      <CollectionEditGroup
-        collectionIndex={collectionIndex}
-        groupIndex={groupIndex}
-      />
-      <Separator className="my-2" />
-
-      <CollectionEditGroupStand
-        collectionIndex={collectionIndex}
-        groupIndex={groupIndex}
-        standIndex={standIndex}
-      />
-      <Separator className="my-2" />
-
-      <CollectionEditGroupStandShelves
-        collectionIndex={collectionIndex}
-        groupIndex={groupIndex}
-        standIndex={standIndex}
       />
     </>
   )

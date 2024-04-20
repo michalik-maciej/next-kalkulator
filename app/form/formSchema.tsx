@@ -15,6 +15,7 @@ export const standSchema = z.object({
 export const groupSchema = z.object({
   foot: z.enum(['37', '47', '57']),
   stands: z.array(standSchema),
+  variant: z.enum(['peak', 'side']),
 })
 
 export const collectionSchema = z.object({
