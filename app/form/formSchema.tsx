@@ -21,6 +21,7 @@ export const groupSchema = z.object({
 export const collectionSchema = z.object({
   groups: z.array(groupSchema),
   height: z.number(),
+  variant: z.enum(['P', 'G', 'I']),
 })
 
 export const calculationSchema = z.object({

@@ -53,7 +53,7 @@ export default async function RootLayout({
                 ))}
               </div>
             </nav>
-            <div className="px-16 m-auto max-w-7xl mb-32">{children}</div>
+            <div className="m-auto max-w-7xl mb-32">{children}</div>
             <Toaster />
           </ThemeProvider>
         </ProductsProvider>
