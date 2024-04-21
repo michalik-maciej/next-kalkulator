@@ -11,12 +11,10 @@ interface Props {
 }
 
 export const CollectionElements = ({ collectionIndex }: Props) => {
-  const form = useFormContext<CalculationType>()
+  const { watch } = useFormContext<CalculationType>()
   const products = useProducts()
-  const elements = elementsInCollection(
-    form.getValues('collections')[collectionIndex],
-    products,
-  )
+  const collection = watch(`collections.${collectionIndex}`)
+  const elements = elementsInCollection(collection, products)
 
   return (
     <ul className="flex flex-col gap-y-1">

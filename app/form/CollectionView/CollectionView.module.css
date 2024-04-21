@@ -1,6 +1,6 @@
 .layout {
   width: min-content;
-  margin: 16px auto;
+  margin: 16px;
   display: grid;
   grid:
     'top0 side0 top1'

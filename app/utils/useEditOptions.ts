@@ -17,17 +17,25 @@ export const useEditOptions = (standWidth?: number) => {
     uniq,
   )(products) as number[]
 
-  const shelfOptions = flow(
-    filter({ category: 'shelf', width: standWidth }),
-    map('depth'),
-    uniq,
-  )(products) as number[]
-
   const widthOptions = flow(
     filter({ category: 'back' }),
     map('width'),
     uniq,
   )(products) as number[]
 
-  return { footOptions, heightOptions, shelfOptions, widthOptions }
+  const shelfOptions = flow(
+    filter({ category: 'shelf', width: standWidth || widthOptions[0] }),
+    map('depth'),
+    uniq,
+  )(products) as number[]
+
+  const collectionVariants = ['P', 'G', 'I'] as const
+
+  return {
+    collectionVariants,
+    footOptions,
+    heightOptions,
+    shelfOptions,
+    widthOptions,
+  }
 }

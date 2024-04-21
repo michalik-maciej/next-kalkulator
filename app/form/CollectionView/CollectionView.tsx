@@ -15,8 +15,8 @@ interface Props {
 }
 
 export const CollectionView = ({ collectionIndex, children }: Props) => {
-  const form = useFormContext<CalculationType>()
-  const collection = form.getValues('collections')[collectionIndex]
+  const { watch } = useFormContext<CalculationType>()
+  const collection = watch(`collections.${collectionIndex}`)
 
   const getContainerDimensions = (height: number, width: number) => {
     const scalingFactor = 2

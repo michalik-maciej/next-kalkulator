@@ -30,17 +30,20 @@ export const EditStand = ({
 }: Props) => {
   const form = useFormContext<CalculationType>()
   const { widthOptions } = useEditOptions()
+  const rootFieldName =
+    `collections.${collectionIndex}.groups.${groupIndex}.stands` as const
 
+  const currentStand = form.watch(`${rootFieldName}.${standIndex}`)
   const stands = useFieldArray({
     control: form.control,
-    name: `collections.${collectionIndex}.groups.${groupIndex}.stands`,
+    name: rootFieldName,
   })
 
   return (
     <>
       <FormField
         control={form.control}
-        name={`collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}.width`}
+        name={`${rootFieldName}.${standIndex}.width`}
         render={({ field }) => {
           const currentWidthIndex = indexOf(field.value, widthOptions)
 
@@ -102,14 +105,7 @@ export const EditStand = ({
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() =>
-                      stands.insert(
-                        standIndex + 1,
-                        form.getValues(
-                          `collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}`,
-                        ),
-                      )
-                    }>
+                    onClick={() => stands.insert(standIndex + 1, currentStand)}>
                     <Plus />
                   </Button>
                   <Button

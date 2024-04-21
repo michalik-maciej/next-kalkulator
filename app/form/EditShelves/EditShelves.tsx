@@ -32,9 +32,8 @@ export const EditShelves = ({
     `collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}` as const
 
   const form = useFormContext<CalculationType>()
-  const { shelfOptions } = useEditOptions(
-    form.getValues(`${rootFieldName}.width`),
-  )
+  const currentWidth = form.watch(`${rootFieldName}.width`)
+  const { shelfOptions } = useEditOptions(currentWidth)
 
   const shelves = useFieldArray({
     control: form.control,
@@ -94,8 +93,8 @@ export const EditShelves = ({
                         form.setValue(
                           field.name,
                           shelfOptions[currentDepthIndex - 1],
+                          { shouldTouch: true },
                         )
-                        form.trigger(field.name)
                       }}>
                       <FoldVertical />
                     </Button>
@@ -107,8 +106,8 @@ export const EditShelves = ({
                         form.setValue(
                           field.name,
                           shelfOptions[currentDepthIndex + 1],
+                          { shouldTouch: true },
                         )
-                        form.trigger(field.name)
                       }}>
                       <UnfoldVertical />
                     </Button>
@@ -128,7 +127,7 @@ export const EditShelves = ({
       <Button
         variant="outline"
         size="icon"
-        onClick={() => shelves.append({ amount: 3, depth: 37 })}>
+        onClick={() => shelves.append({ amount: 3, depth: shelfOptions[1] })}>
         <Plus />
       </Button>
     </div>

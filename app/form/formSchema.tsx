@@ -15,18 +15,22 @@ export const standSchema = z.object({
 export const groupSchema = z.object({
   foot: z.number(),
   stands: z.array(standSchema),
-  variant: z.enum(['peak', 'side']),
+  variant: z.enum(['peak', 'side', 'side-gondola']),
 })
 
 export const collectionSchema = z.object({
   groups: z.array(groupSchema),
   height: z.number(),
-  variant: z.enum(['P', 'G', 'I']),
 })
 
 export const calculationSchema = z.object({
   title: z.string().max(160),
   collections: z.array(collectionSchema),
+  // discount: z.number(),
+  //   color: {
+  //   elements: string
+  //   strips: string
+  // },
 })
 
 export type CollectionType = z.infer<typeof collectionSchema>
