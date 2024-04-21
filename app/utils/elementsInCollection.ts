@@ -29,7 +29,7 @@ export function elementsInCollection(
   }
 
   function feetInGroup(group: GroupType) {
-    const foot = find({ category: 'foot', depth: Number(group.foot) }, products)
+    const foot = find({ category: 'foot', depth: group.foot }, products)
 
     if (isEmpty(group.stands) || !foot) return []
 
@@ -42,11 +42,7 @@ export function elementsInCollection(
   }
 
   function legsInGroup(group: GroupType) {
-    const leg = find(
-      { category: 'leg', height: Number(collection.height) },
-      products,
-    )
-
+    const leg = find({ category: 'leg', height: collection.height }, products)
     if (isEmpty(group.stands || !leg)) return []
 
     return [
@@ -64,8 +60,8 @@ export function elementsInCollection(
       const baseShelf = find(
         {
           category: 'shelf',
-          depth: Number(group.foot),
-          width: Number(stand.width),
+          depth: group.foot,
+          width: stand.width,
         },
         products,
       )
@@ -74,8 +70,8 @@ export function elementsInCollection(
         const shelf = find(
           {
             category: 'shelf',
-            depth: Number(depth),
-            width: Number(stand.width),
+            depth,
+            width: stand.width,
           },
           products,
         )
@@ -84,10 +80,7 @@ export function elementsInCollection(
       }, stand.shelves)
 
       const supports = map(({ amount, depth }) => {
-        const support = find(
-          { category: 'support', depth: Number(depth) },
-          products,
-        )
+        const support = find({ category: 'support', depth }, products)
 
         return merge(support, { amount: 2 * amount })
       }, stand.shelves)
@@ -101,22 +94,22 @@ export function elementsInCollection(
   function backsInGroup(group: GroupType) {
     if (isEmpty(group.stands)) return []
 
-    function backsInStand(stand: StandType) {
+    function backsInStand({ width }: StandType) {
       const backs = pipe(
-        filter({ category: 'back', width: Number(stand.width) }),
+        filter({ category: 'back', width }),
         orderBy(['height'], ['desc']),
       )(products) as Product[]
 
       const order = []
       const BACK_OFFSET = 10
-      let remainder = Number(collection.height) - BACK_OFFSET
+      let remainder = collection.height - BACK_OFFSET
 
       for (const back of backs) {
-        if (remainder >= Number(back.height)) {
-          const amount = Math.floor(remainder / Number(back.height))
+        if (back.height && remainder >= back.height) {
+          const amount = Math.floor(remainder / back.height)
 
           order.push(merge(back, { amount }))
-          remainder = remainder % Number(back.height)
+          remainder = remainder % back.height
         }
       }
       return order

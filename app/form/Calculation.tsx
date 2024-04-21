@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Product } from '@prisma/client'
 import { Plus } from 'lucide-react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
@@ -16,10 +15,9 @@ import { CalculationType, calculationSchema } from './formSchema'
 
 interface Props {
   initialData: CalculationType
-  products: Product[]
 }
 
-export const Calculation = ({ initialData, products }: Props) => {
+export const Calculation = ({ initialData }: Props) => {
   const form = useForm<CalculationType>({
     resolver: zodResolver(calculationSchema),
     defaultValues: initialData,
@@ -56,10 +54,7 @@ export const Calculation = ({ initialData, products }: Props) => {
             <CollectionView
               key={collection.id}
               collectionIndex={collectionIndex}>
-              <CollectionElements
-                collectionIndex={collectionIndex}
-                products={products}
-              />
+              <CollectionElements collectionIndex={collectionIndex} />
             </CollectionView>
           ))}
           <Button

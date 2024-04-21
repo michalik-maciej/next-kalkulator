@@ -4,6 +4,7 @@ import { indexOf, size } from 'lodash/fp'
 import { FoldVertical, UnfoldVertical } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
+import { useEditOptions } from '@/app/utils'
 import { Button } from '@/components/ui/button'
 import { FormField, FormItem } from '@/components/ui/form'
 
@@ -16,7 +17,7 @@ interface Props {
 
 export const EditGroup = ({ collectionIndex, groupIndex }: Props) => {
   const form = useFormContext<CalculationType>()
-  const footOptions = ['37', '47', '57'] as const
+  const { footOptions } = useEditOptions()
 
   return (
     <FormField

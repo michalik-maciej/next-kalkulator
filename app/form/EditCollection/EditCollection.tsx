@@ -4,6 +4,7 @@ import { indexOf, size } from 'lodash/fp'
 import { ArrowDownToLine, ArrowUpFromLine } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
+import { useEditOptions } from '@/app/utils'
 import { Button } from '@/components/ui/button'
 import { FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -16,7 +17,7 @@ interface Props {
 
 export const EditCollection = ({ collectionIndex }: Props) => {
   const form = useFormContext<CalculationType>()
-  const heightOptions = ['90', '130', '170', '180', '210'] as const
+  const { heightOptions } = useEditOptions()
 
   return (
     <>

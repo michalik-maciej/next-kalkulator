@@ -1,6 +1,6 @@
-import { Product } from '@prisma/client'
 import { useFormContext } from 'react-hook-form'
 
+import { useProducts } from '@/app/ProductsProvider'
 import { elementsInCollection } from '@/app/utils/elementsInCollection'
 import { Separator } from '@/components/ui/separator'
 
@@ -8,11 +8,11 @@ import { CalculationType } from '../formSchema'
 
 interface Props {
   collectionIndex: number
-  products: Product[]
 }
 
-export const CollectionElements = ({ collectionIndex, products }: Props) => {
+export const CollectionElements = ({ collectionIndex }: Props) => {
   const form = useFormContext<CalculationType>()
+  const products = useProducts()
   const elements = elementsInCollection(
     form.getValues('collections')[collectionIndex],
     products,

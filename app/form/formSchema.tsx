@@ -4,23 +4,23 @@ import { z } from 'zod'
 
 export const shelfSchema = z.object({
   amount: z.number().int(),
-  depth: z.enum(['37', '47', '57']),
+  depth: z.number(),
 })
 
 export const standSchema = z.object({
-  width: z.enum(['66', '80', '100', '125']),
+  width: z.number(),
   shelves: z.array(shelfSchema),
 })
 
 export const groupSchema = z.object({
-  foot: z.enum(['37', '47', '57']),
+  foot: z.number(),
   stands: z.array(standSchema),
   variant: z.enum(['peak', 'side']),
 })
 
 export const collectionSchema = z.object({
   groups: z.array(groupSchema),
-  height: z.enum(['90', '130', '170', '180', '210']),
+  height: z.number(),
   variant: z.enum(['P', 'G', 'I']),
 })
 

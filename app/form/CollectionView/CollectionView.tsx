@@ -18,11 +18,11 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
   const form = useFormContext<CalculationType>()
   const collection = form.getValues('collections')[collectionIndex]
 
-  const getContainerDimensions = (height: string, width: string) => {
+  const getContainerDimensions = (height: number, width: number) => {
     const scalingFactor = 2
     return {
-      height: `${scalingFactor * Number(height)}px`,
-      width: `${scalingFactor * Number(width)}px`,
+      height: `${scalingFactor * height}px`,
+      width: `${scalingFactor * width}px`,
     }
   }
 

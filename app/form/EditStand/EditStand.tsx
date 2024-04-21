@@ -11,9 +11,9 @@ import {
 } from 'lucide-react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
+import { useEditOptions } from '@/app/utils'
 import { Button } from '@/components/ui/button'
 import { FormField, FormItem } from '@/components/ui/form'
-import { Separator } from '@/components/ui/separator'
 
 import { CalculationType } from '../formSchema'
 
@@ -29,7 +29,7 @@ export const EditStand = ({
   standIndex,
 }: Props) => {
   const form = useFormContext<CalculationType>()
-  const widthOptions = ['66', '80', '100', '125'] as const
+  const { widthOptions } = useEditOptions()
 
   const stands = useFieldArray({
     control: form.control,

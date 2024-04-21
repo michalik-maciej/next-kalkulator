@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
+import { useEditOptions } from '@/app/utils'
 import { Button } from '@/components/ui/button'
 import { FormField, FormItem } from '@/components/ui/form'
 
@@ -27,22 +28,27 @@ export const EditShelves = ({
   groupIndex,
   standIndex,
 }: Props) => {
+  const rootFieldName =
+    `collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}` as const
+
   const form = useFormContext<CalculationType>()
-  const depthOptions = ['37', '47', '57'] as const
+  const { shelfOptions } = useEditOptions(
+    form.getValues(`${rootFieldName}.width`),
+  )
 
   const shelves = useFieldArray({
     control: form.control,
-    name: `collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}.shelves`,
+    name: `${rootFieldName}.shelves`,
   })
 
   return (
     <div className="flex rounded-lg gap-2 flex-col border-2 m-8 p-4 items-center">
       Półki
-      {shelves.fields.map((field, index) => (
+      {shelves.fields.map((field, shelfIndex) => (
         <div key={field.id}>
           <FormField
             control={form.control}
-            name={`collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}.shelves.${index}.amount`}
+            name={`${rootFieldName}.shelves.${shelfIndex}.amount`}
             render={({ field }) => {
               return (
                 <FormItem>
@@ -73,9 +79,9 @@ export const EditShelves = ({
           />
           <FormField
             control={form.control}
-            name={`collections.${collectionIndex}.groups.${groupIndex}.stands.${standIndex}.shelves.${index}.depth`}
+            name={`${rootFieldName}.shelves.${shelfIndex}.depth`}
             render={({ field }) => {
-              const currentDepthIndex = indexOf(field.value, depthOptions)
+              const currentDepthIndex = indexOf(field.value, shelfOptions)
 
               return (
                 <FormItem>
@@ -87,7 +93,7 @@ export const EditShelves = ({
                       onClick={() => {
                         form.setValue(
                           field.name,
-                          depthOptions[currentDepthIndex - 1],
+                          shelfOptions[currentDepthIndex - 1],
                         )
                         form.trigger(field.name)
                       }}>
@@ -96,11 +102,11 @@ export const EditShelves = ({
                     <Button
                       size="icon"
                       variant="ghost"
-                      disabled={currentDepthIndex >= size(depthOptions) - 1}
+                      disabled={currentDepthIndex >= size(shelfOptions) - 1}
                       onClick={() => {
                         form.setValue(
                           field.name,
-                          depthOptions[currentDepthIndex + 1],
+                          shelfOptions[currentDepthIndex + 1],
                         )
                         form.trigger(field.name)
                       }}>
@@ -114,7 +120,7 @@ export const EditShelves = ({
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => shelves.remove(index)}>
+            onClick={() => shelves.remove(shelfIndex)}>
             <Trash2 />
           </Button>
         </div>
@@ -122,7 +128,7 @@ export const EditShelves = ({
       <Button
         variant="outline"
         size="icon"
-        onClick={() => shelves.append({ amount: 3, depth: '37' })}>
+        onClick={() => shelves.append({ amount: 3, depth: 37 })}>
         <Plus />
       </Button>
     </div>
