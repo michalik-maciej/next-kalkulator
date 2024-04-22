@@ -1,6 +1,7 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { isEqual } from 'lodash/fp'
+import { ReactNode, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import { useProducts } from '@/app/ProductsProvider'
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const CollectionView = ({ collectionIndex, children }: Props) => {
+  const [standAddress, setStandAddress] = useState<number[] | null>(null)
   const { watch } = useFormContext<CalculationType>()
   const collection = watch(`collections.${collectionIndex}`)
   const collectionDescription = useCollectionDescription(collectionIndex)
@@ -37,6 +39,9 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
     }
   }
 
+  const getStandHighlight = (standIndexes: number[]) =>
+    isEqual(standIndexes, standAddress) ? 'border-red-400' : ''
+
   return (
     <div className="mb-8">
       <div className="flex justify-between">
@@ -51,10 +56,15 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
         {collection.groups.map((group, groupIndex) => (
           <div key={groupIndex} className="flex border-2 border-slate-900">
             {group.stands.map((stand, standIndex) => (
-              <Drawer key={standIndex} direction="right">
+              <Drawer
+                onOpenChange={(bool) =>
+                  setStandAddress(bool ? [groupIndex, standIndex] : null)
+                }
+                key={standIndex}
+                direction="right">
                 <DrawerTrigger
                   style={getContainerDimensions(group.foot, stand.width)}
-                  className={`flex flex-col border-2 transition-width transition-height justify-center items-center`}>
+                  className={`flex flex-col border-2 transition-width transition-height justify-center items-center ${getStandHighlight([groupIndex, standIndex])}`}>
                   <div>
                     {[stand.width, group.foot, collection.height].join('/')}
                   </div>
