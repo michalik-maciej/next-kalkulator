@@ -32,7 +32,7 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
   const collectionPrice = getFormattedPrice(elements)
 
   const getContainerDimensions = (height: number, width: number) => {
-    const scalingFactor = 2
+    const scalingFactor = 1.6
     return {
       height: `${scalingFactor * height}px`,
       width: `${scalingFactor * width}px`,

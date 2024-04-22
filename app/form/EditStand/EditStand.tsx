@@ -1,14 +1,7 @@
 'use client'
 
 import { indexOf, size } from 'lodash/fp'
-import {
-  FoldHorizontal,
-  MoveLeft,
-  MoveRight,
-  Plus,
-  Trash2,
-  UnfoldHorizontal,
-} from 'lucide-react'
+import { FoldHorizontal, Plus, Trash2, UnfoldHorizontal } from 'lucide-react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { useEditOptions } from '@/app/utils'
@@ -33,6 +26,9 @@ export const EditStand = ({
   const rootFieldName =
     `collections.${collectionIndex}.groups.${groupIndex}.stands` as const
 
+  const groupVariant = form.watch(
+    `collections.${collectionIndex}.groups.${groupIndex}.variant`,
+  )
   const currentStand = form.watch(`${rootFieldName}.${standIndex}`)
   const stands = useFieldArray({
     control: form.control,
@@ -60,8 +56,8 @@ export const EditStand = ({
                       form.setValue(
                         field.name,
                         widthOptions[currentWidthIndex - 1],
+                        { shouldTouch: true },
                       )
-                      form.trigger(field.name)
                     }}>
                     <FoldHorizontal />
                   </Button>
@@ -73,29 +69,10 @@ export const EditStand = ({
                       form.setValue(
                         field.name,
                         widthOptions[currentWidthIndex + 1],
+                        { shouldTouch: true },
                       )
-                      form.trigger(field.name)
                     }}>
                     <UnfoldHorizontal />
-                  </Button>
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div>Regał pozycja</div>
-                <div className="flex gap-x-2">
-                  <Button
-                    variant="ghost"
-                    disabled={standIndex < 1}
-                    size="icon"
-                    onClick={() => stands.swap(standIndex, standIndex - 1)}>
-                    <MoveLeft />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    disabled={standIndex >= size(stands.fields) - 1}
-                    size="icon"
-                    onClick={() => stands.swap(standIndex, standIndex + 1)}>
-                    <MoveRight />
                   </Button>
                 </div>
               </div>
@@ -104,6 +81,7 @@ export const EditStand = ({
                 <div className="flex gap-x-2">
                   <Button
                     variant="ghost"
+                    disabled={groupVariant === 'peak'}
                     size="icon"
                     onClick={() => stands.insert(standIndex + 1, currentStand)}>
                     <Plus />

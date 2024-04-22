@@ -71,6 +71,7 @@
     @apply border-border;
   }
   body {
+    overflow-y: scroll;
     @apply bg-background text-foreground;
   }
 }

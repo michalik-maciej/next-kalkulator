@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin'
 
 const config = {
   darkMode: ['class'],
@@ -77,7 +78,14 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    plugin(function ({ addBase }) {
+      addBase({
+        html: { fontSize: '14px' },
+      })
+    }),
+  ],
 } satisfies Config
 
 export default config
