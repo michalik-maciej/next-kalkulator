@@ -43,5 +43,5 @@ export const useInitialCollection = () => {
     return [initialGroup]
   }
 
-  return { setCollectionGroups }
+  return { setCollectionGroups, defaultStand: initialStand }
 }

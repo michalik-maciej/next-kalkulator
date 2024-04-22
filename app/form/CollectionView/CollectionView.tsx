@@ -1,6 +1,7 @@
 'use client'
 
-import { isEqual } from 'lodash/fp'
+import { isEmpty, isEqual } from 'lodash/fp'
+import { Plus } from 'lucide-react'
 import { ReactNode, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -8,7 +9,9 @@ import { useProducts } from '@/app/ProductsProvider'
 import { elementsInCollection } from '@/app/utils/elementsInCollection'
 import { getFormattedPrice } from '@/app/utils/getFormattedPrice'
 import { useCollectionDescription } from '@/app/utils/useCollectionDescription'
+import { useInitialCollection } from '@/app/utils/useInitialCollection'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { Separator } from '@/components/ui/separator'
 
@@ -26,7 +29,7 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
   const { watch } = useFormContext<CalculationType>()
   const collection = watch(`collections.${collectionIndex}`)
   const collectionDescription = useCollectionDescription(collectionIndex)
-
+  const { defaultStand } = useInitialCollection()
   const products = useProducts()
   const elements = elementsInCollection(collection, products)
   const collectionPrice = getFormattedPrice(elements)
@@ -84,6 +87,20 @@ export const CollectionView = ({ collectionIndex, children }: Props) => {
                 </DrawerContent>
               </Drawer>
             ))}
+            {isEmpty(group.stands) && (
+              <div
+                style={getContainerDimensions(group.foot, defaultStand.width)}
+                className="flex items-center justify-center">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() =>
+                    collection.groups[groupIndex].stands.push(defaultStand)
+                  }>
+                  <Plus />
+                </Button>
+              </div>
+            )}
           </div>
         ))}
       </div>

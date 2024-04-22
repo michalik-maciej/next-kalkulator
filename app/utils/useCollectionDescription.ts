@@ -16,7 +16,7 @@ export const useCollectionDescription = (collectionIndex: number) => {
     I: 'impulsów',
   }
 
-  const mapShelves = groups[0].stands[0].shelves
+  const mapShelves = groups[0].stands[0]?.shelves
     .map(({ depth, amount }) => ` ${amount}x${depth}`)
     .join(', ')
 
