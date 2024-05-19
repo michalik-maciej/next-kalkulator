@@ -1,36 +1,17 @@
-import { Product } from '@prisma/client'
-import { filter, keys, sortBy } from 'lodash/fp'
+import { filter, keys } from 'lodash/fp'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
+import { getProducts } from '../actions/getProducts'
+import { sortProductsByCategory } from '../utils/sortProductsByCategory'
 import { ProductForm } from './ProductForm'
-import { getProducts } from './actions'
 
-export default async function Home() {
+export default async function Catalog() {
   const products = await getProducts()
-
-  const dictionary: {
-    [key in Product['category']]: string
-  } = {
-    leg: 'Nogi',
-    foot: 'Stopy',
-    baseCover: 'Osłony dolne',
-    shelf: 'Półki',
-    support: 'Wsporniki',
-    back: 'Plecy',
-    priceStrip: 'Listwy cenowe',
-    misc: 'Inne',
-  }
-
-  const categoriesOrder = keys(dictionary) as Product['category'][]
-
-  const sortedCategories = sortBy(
-    (category) => categoriesOrder.indexOf(category),
-    categoriesOrder,
-  )
+  const { dictionary, sortedCategories } = sortProductsByCategory()
 
   return (
-    <Tabs defaultValue={categoriesOrder[0]}>
+    <Tabs defaultValue={keys(dictionary)[0]}>
       <TabsList className="w-full space-x-4">
         {sortedCategories.map((category) => (
           <TabsTrigger key={category} value={category}>

@@ -12,7 +12,7 @@ import {
   size,
 } from 'lodash/fp'
 
-import { CollectionType, GroupType, StandType } from '../form/formSchema'
+import { CollectionType, GroupType, StandType } from '../formSchema'
 import { sumByProductId } from './sumByProductId'
 
 export function elementsInCollection(

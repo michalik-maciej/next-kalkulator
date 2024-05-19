@@ -8,7 +8,7 @@ import { useEditOptions } from '@/app/utils'
 import { Button } from '@/components/ui/button'
 import { FormField, FormItem } from '@/components/ui/form'
 
-import { CalculationType } from '../formSchema'
+import { CalculationType } from '../../formSchema'
 
 interface Props {
   collectionIndex: number

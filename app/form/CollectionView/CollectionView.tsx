@@ -15,8 +15,8 @@ import { Button } from '@/components/ui/button'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { Separator } from '@/components/ui/separator'
 
+import { CalculationType } from '../../formSchema'
 import { EditWrapper } from '../EditWrapper'
-import { CalculationType } from '../formSchema'
 import styles from './CollectionView.module.css'
 
 interface Props {

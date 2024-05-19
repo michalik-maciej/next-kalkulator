@@ -1,13 +1,11 @@
-import {
-  CollectionType,
-  GroupType,
-  ShelfType,
-  StandType,
-} from '../form/formSchema'
+import { find } from 'lodash/fp'
+
+import { CollectionType, GroupType, ShelfType, StandType } from '../formSchema'
 import { useEditOptions } from './useEditOptions'
 
 export const useInitialCollection = () => {
-  const { footOptions, shelfOptions, widthOptions } = useEditOptions()
+  const { footOptions, heightOptions, shelfOptions, widthOptions } =
+    useEditOptions()
 
   const initialShelf: ShelfType = { amount: 3, depth: shelfOptions[0] }
   const initialStand: StandType = {
@@ -31,6 +29,12 @@ export const useInitialCollection = () => {
     variant: 'peak',
   }
 
+  const initialCollection: CollectionType = {
+    variant: 'P',
+    groups: [initialGroup],
+    height: find(170, heightOptions) || heightOptions[0],
+  }
+
   const setCollectionGroups = (variant: CollectionType['variant']) => {
     if (variant === 'I') {
       return [initialGroup]
@@ -43,5 +47,5 @@ export const useInitialCollection = () => {
     return [initialGroup]
   }
 
-  return { setCollectionGroups, defaultStand: initialStand }
+  return { setCollectionGroups, defaultStand: initialStand, initialCollection }
 }

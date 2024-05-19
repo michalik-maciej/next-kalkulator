@@ -4,7 +4,7 @@ import { useProducts } from '@/app/ProductsProvider'
 import { elementsInCollection } from '@/app/utils/elementsInCollection'
 import { Separator } from '@/components/ui/separator'
 
-import { CalculationType } from '../formSchema'
+import { CalculationType } from '../../formSchema'
 
 interface Props {
   collectionIndex: number

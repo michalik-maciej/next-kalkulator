@@ -25,7 +25,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 
-import { createProduct, deleteProduct, updateProduct } from './actions'
+import { createProduct } from '../actions/createProduct'
+import { deleteProduct } from '../actions/deleteProduct'
+import { updateProduct } from '../actions/updateProduct'
 import { productFormSchema } from './productFormSchema'
 
 type FormType = z.infer<typeof productFormSchema>

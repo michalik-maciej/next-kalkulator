@@ -18,11 +18,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FormField, FormItem } from '@/components/ui/form'
+import { FormField } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
-import { CalculationType } from '../formSchema'
+import { CalculationType } from '../../formSchema'
 
 interface Props {
   collectionIndex: number

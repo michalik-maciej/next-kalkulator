@@ -1,7 +1,7 @@
 import { countBy, uniq } from 'lodash/fp'
 import { useFormContext } from 'react-hook-form'
 
-import { CalculationType } from '../form/formSchema'
+import { CalculationType } from '../formSchema'
 
 export const useCollectionDescription = (collectionIndex: number) => {
   const form = useFormContext<CalculationType>()

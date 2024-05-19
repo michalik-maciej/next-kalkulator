@@ -7,7 +7,7 @@ export const sumByProductId = (
   pipe(
     groupBy('id'),
     map((group) => ({
-      ...pick(['id', 'label', 'price'], group[0]),
+      ...pick(['id', 'label', 'price', 'category'], group[0]),
       amount: sumBy('amount', group),
     })),
     reject(['amount', 0]),
