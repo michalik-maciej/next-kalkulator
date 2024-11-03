@@ -5,14 +5,10 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/.cache
 
 # testing
 /coverage
-
-# next.js
-/.next/
-/out/
-next-env.d.ts
 
 # production
 /build
